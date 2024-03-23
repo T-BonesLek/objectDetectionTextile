@@ -1,0 +1,8 @@
+# Colcon
+**/build
+**/install
+**/log
+**/src/cameraSettings/checkerboardImages
+
+# Python
+**/__pycache__
