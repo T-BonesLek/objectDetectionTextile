@@ -2,6 +2,6 @@
 **/build
 **/install
 **/log
-**.jpg
+**/checkerboardImages/**/*.jpg
 # Python
 **/__pycache__
