@@ -3,5 +3,6 @@
 **/install
 **/log
 *.jpg
+**/yolo-Weights
 # Python
 **/__pycache__
