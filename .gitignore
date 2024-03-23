@@ -2,7 +2,6 @@
 **/build
 **/install
 **/log
-**/src/cameraSettings/checkerboardImages
-
+**/src/cameraSettings/checkerboardImages/**/*.jpg
 # Python
 **/__pycache__
