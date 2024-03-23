@@ -13,7 +13,7 @@ objp[:,:2] = np.mgrid[0:9,0:6].T.reshape(-1,2)
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
 
-images = glob.glob('cameraSettings/checkerboardImages/*.jpg')
+images = glob.glob('src/yoloV8/cameraSettings/checkerboardImages/*.jpg')
 
 # Initialize gray
 gray = None
@@ -43,6 +43,6 @@ if gray is not None:
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
     # Save the camera matrix for later use
-    np.save('cameraSettings/cam_mtx.npy', mtx)
+    np.save('src/yoloV8/cameraSettings/cam_mtx.npy', mtx)
 else:
     print("No images found for calibration")

@@ -59,9 +59,9 @@ class ImageSubscriber(Node):
 
     def load_roi(self):
             # Check if ROI file exists
-            if os.path.exists('cameraSettings/roi.pkl'):
+            if os.path.exists('./cameraSettings/roi.pkl'):
                 # Load the ROI if it exists
-                with open('cameraSettings/roi.pkl', 'rb') as f:
+                with open('./cameraSettings/roi.pkl', 'rb') as f:
                     self.roi = pickle.load(f)
                     print("ROI loaded from file:", self.roi)
             else:
@@ -71,7 +71,7 @@ class ImageSubscriber(Node):
 
     def save_roi(self):
         # Save the ROI coordinates to a file
-        with open('cameraSettings/roi.pkl', 'wb') as f:
+        with open('./cameraSettings/roi.pkl', 'wb') as f:
             pickle.dump(self.roi, f)
 
     
@@ -118,7 +118,7 @@ class ImageSubscriber(Node):
                         cv2.circle(img, (center_x, center_y), 5, (255, 255, 0), -1)
 
                         # camera matrix (mtx) from calibration
-                        mtx = np.load('cameraSettings/cam_mtx.npy')  # Load camera matrix from file
+                        mtx = np.load('./cameraSettings/cam_mtx.npy')  # Load camera matrix from file
 
                         # Camera height above the conveyor belt in mm
                         Z = 405  # replace with actual height
