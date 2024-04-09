@@ -16,7 +16,9 @@ class ImageSubscriber(Node):
             self.listener_callback,
             10)
         self.img_counter = 0
-        self.save_dir = "src/yoloV8/cameraSettings/checkerboardImages"
+        # self.save_dir = "src/yoloV8/cameraSettings/checkerboardImages"
+        self.save_dir = "src/yoloV8/objDetectionImagesBatch2"
+
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
         self.latest_image = None
