@@ -162,8 +162,8 @@ class ImageSubscriber(Node):
                             # Add the object's ID to the list of published IDs
                             self.published_ids.append(box.id)
 
-                            # Store object ID and center coordinates in the global array
-                            object_array.append((box.id, (robot_pickup_value_x, robot_pickup_value_y)))
+                            ## Store object ID and center coordinates in the global array
+                            # object_array.append((box.id, (robot_pickup_value_x, robot_pickup_value_y)))
 
                             if box.id == None:
                                 id = 0.0
@@ -173,7 +173,7 @@ class ImageSubscriber(Node):
                             x = [round(float(robot_pickup_value_x), 2), round(float(robot_pickup_value_y), 2), float(textile_class), float(id) ]# round to one decimal place
         
                             node.publish_message(x)
-                            print("object information:", object_array) # object information: [(tensor([1.]), (314, 356)), (tensor([2.]), (337, 572)), (tensor([3.]), (362, 104))]
+                            # print("object information:", object_array) # object information: [(tensor([1.]), (314, 356)), (tensor([2.]), (337, 572)), (tensor([3.]), (362, 104))]
 
 
                 cv2.imshow('ROI with YOLO', annotated_frame)
