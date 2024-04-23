@@ -93,10 +93,10 @@ class ImageSubscriber(Node):
                 if not boxes:
                     node = ObjectPublisher()
                     x = [999.99, 999.99, 999.99, 999.99]  # No boxes detected
-                    node.publish_message(x)
+                    # node.publish_message(x)
 
                 for box in boxes:
-                    confidence_threshold = 0.6
+                    confidence_threshold = 0.7
                     if box.conf >= confidence_threshold:
                         x1, y1, x2, y2 = box.xyxy[0]
                         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
@@ -112,14 +112,13 @@ class ImageSubscriber(Node):
                             robot_pickup_value_x, robot_pickup_value_y = self.pixel_to_world_coordinates(x1, y1, x2, y2)
                             id = box.id if box.id is not None else 0.0
 
-                            # Check if object has been published
-                            if not self.object_published:
+                            # Check if this specific object has been published
+                            if id not in self.published_ids:
                                 x = [round(float(robot_pickup_value_x), 2), round(float(robot_pickup_value_y), 2),
                                      float(cls), float(id)]
                                 node = ObjectPublisher()
                                 node.publish_message(x)
-                                self.published_ids.append(box.id)
-                                self.object_published = True  # Set object_published to True
+                                self.published_ids.append(id)  # Add this object's id to the list of published ids
 
             cv2.imshow('ROI with YOLO', annotated_frame)
             self.save_roi()
@@ -164,9 +163,9 @@ def main(args=None):
     # Set the scanning area (adjust these values as needed)
     image_subscriber.set_scanning_area(
         int(image_subscriber.roi[0]  * 0.0),
-        int(image_subscriber.roi[1]  * 2.0),
+        int(image_subscriber.roi[1]  * 4.0),
         int(image_subscriber.roi[2] * 1.0),
-        int(image_subscriber.roi[3] * 0.7)
+        int(image_subscriber.roi[3] * 0.2)
     )
     rclpy.spin(image_subscriber)
     image_subscriber.destroy_node()
