@@ -92,8 +92,6 @@ class ImageSubscriber(Node):
             
             # Visualize the results on the frame
             annotated_frame = results[0].plot()
-            # Global array to store object IDs and their corresponding center coordinates
-            object_array = []
 
             # coordinates
             for r in results:
