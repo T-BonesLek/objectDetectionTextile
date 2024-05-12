@@ -82,19 +82,10 @@ class ImageSubscriber(Node):
 
             annotated_frame = results[0].plot()
 
-
             # Draw the scanning area on the frame
             if self.scanning_area is not None:
                 cv2.rectangle(annotated_frame, (self.scanning_area[0], self.scanning_area[1]),
                               (self.scanning_area[0] + self.scanning_area[2], self.scanning_area[1] + self.scanning_area[3]), (0, 255, 255), 2)
-
-            # Set the scanning area (adjust these values as needed)
-            self.set_scanning_area(
-                int(self.roi[0]  * 0.0),
-                int(self.roi[1]  * 4.0),
-                int(self.roi[2] * 1.0),
-                int(self.roi[3] * 0.05)
-            )
 
             for r in results:
                 boxes = r.boxes
@@ -102,9 +93,10 @@ class ImageSubscriber(Node):
                 if not boxes:
                     node = ObjectPublisher()
                     x = [999.99, 999.99, 999.99, 999.99]  # No boxes detected
+                    # node.publish_message(x)
 
                 for box in boxes:
-                    confidence_threshold = 0.7
+                    confidence_threshold = 0.6
                     if box.conf >= confidence_threshold:
                         x1, y1, x2, y2 = box.xyxy[0]
                         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
@@ -168,15 +160,16 @@ def main(args=None):
     rclpy.init(args=args)
     node = ObjectPublisher()
     image_subscriber = ImageSubscriber()
+    # Set the scanning area (adjust these values as needed)
+    image_subscriber.set_scanning_area(
+        int(image_subscriber.roi[0]  * 0.0),
+        int(image_subscriber.roi[1]  * 2.0),
+        int(image_subscriber.roi[2] * 1.0),
+        int(image_subscriber.roi[3] * 0.7)
+    )
     rclpy.spin(image_subscriber)
     image_subscriber.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
-
-    # terminal5:(realsense2_camera)
-    # cd
-    # cd github/objectDetectionTextile
-    # source /opt/ros/humble/setup.bash 
-    # ros2 launch realsense2_camera rs_launch.py camera_namespace:=textilePose camera_name:=D455
